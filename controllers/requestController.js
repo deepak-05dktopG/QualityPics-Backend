@@ -78,7 +78,7 @@ const submitProductRequest = async (req, res) => {
     </table>
 
     <div style="text-align: center; margin-top: 30px;">
-      <a href="https://yourwebsite.com" style="padding: 12px 20px; background-color: #007bff; color: #fff; text-decoration: none; font-weight: bold; border-radius: 5px;">
+      <a href="https://qualitypicks.vercel.app/" style="padding: 12px 20px; background-color: #007bff; color: #fff; text-decoration: none; font-weight: bold; border-radius: 5px;">
         Explore Similar Products 🔍
       </a>
     </div>
@@ -125,7 +125,7 @@ const replyToProductAdded = async (req, res) => {
     </div>
 
     <div style="text-align: center; margin-top: 25px;">
-      <a href="https://yourwebsite.com/products" style="background: #007bff; color: #fff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 6px;">
+      <a href="https://qualitypicks.vercel.app/" style="background: #007bff; color: #fff; padding: 12px 24px; text-decoration: none; font-weight: bold; border-radius: 6px;">
         🔍 View Your Product
       </a>
     </div>

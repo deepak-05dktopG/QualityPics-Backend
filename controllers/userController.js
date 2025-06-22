@@ -47,7 +47,7 @@ const registerUser = async (req, res) => {
     Start exploring now and make confident purchase decisions with ease.
   </p>
   <div style="text-align:center; margin-top:28px;">
-    <a href="http://localhost:8080" style="background:#2C7BE5; color:#fff; padding:12px 28px; text-decoration:none; border-radius:7px; font-size:16px; font-weight:600; box-shadow:0 2px 6px rgba(44,123,229,0.12); display:inline-block;">
+    <a href="https://qualitypicks.vercel.app/" style="background:#2C7BE5; color:#fff; padding:12px 28px; text-decoration:none; border-radius:7px; font-size:16px; font-weight:600; box-shadow:0 2px 6px rgba(44,123,229,0.12); display:inline-block;">
       🔗 Visit QualityPicks
     </a>
   </div>

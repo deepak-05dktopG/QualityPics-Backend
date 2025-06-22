@@ -91,7 +91,7 @@ exports.replyToContact = async (req, res) => {
     </div>
 
     <div style="text-align: center; margin-top: 40px;">
-      <a href="https://yourwebsite.com" style="display: inline-block; padding: 12px 25px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      <a href="https://qualitypicks.vercel.app/" style="display: inline-block; padding: 12px 25px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         🌐 Visit Our Website
       </a>
     </div>
