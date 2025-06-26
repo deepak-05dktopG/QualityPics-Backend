@@ -70,7 +70,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-// Login user
+// Login users
 const loginUser = async (req, res) => {
   const { email } = req.body;
   try {
