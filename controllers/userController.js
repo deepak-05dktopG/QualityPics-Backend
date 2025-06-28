@@ -14,7 +14,35 @@ const getAllUsers = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+function generateEmailHTML(message) {
+  return `
+    <div style="font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 20px;">
+      <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px;">
+        <h2 style="color: #083f90;">📢 A Message from QualityPicks</h2>
+        <p style="font-size: 16px; line-height: 1.5; color: #333333;">
+          ${message}
+        </p>
+        <hr style="margin: 20px 0;" />
+        <p style="font-size: 14px; color: #777777;">
+          Thanks for being with us 💙 <br />
+          — Team QualityPicks
+        </p>
+      </div>
+    </div>
+  `;
+}
+//sendBulkEmail
+const sendBulkEmail = async (req, res) => {
+  const { subject, message } = req.body;
+  const users = await User.find({}, "email");
 
+  const promises = users.map((user) =>
+    sendEmail(user.email, subject, generateEmailHTML(message))
+  );
+
+  await Promise.all(promises);
+  res.json({ success: true });
+};
 
 //get user
 const getUser = async (req, res) => {
@@ -100,4 +128,10 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser, getUser,getAllUsers };
+module.exports = {
+  registerUser,
+  loginUser,
+  getUser,
+  getAllUsers,
+  sendBulkEmail,
+};
