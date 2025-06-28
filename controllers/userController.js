@@ -16,19 +16,27 @@ const getAllUsers = async (req, res) => {
 };
 function generateEmailHTML(message) {
   return `
-    <div style="font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 20px;">
-      <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px;">
-        <h2 style="color: #083f90;">📢 A Message from QualityPicks</h2>
-        <p style="font-size: 16px; line-height: 1.5; color: #333333;">
-          ${message}
-        </p>
-        <hr style="margin: 20px 0;" />
-        <p style="font-size: 14px; color: #777777;">
-          Thanks for being with us 💙 <br />
-          — Team QualityPicks
-        </p>
-      </div>
-    </div>
+   <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; color: #333;">
+  <h2 style="color: #083f90;">Hey there 👋</h2>
+
+  <p>We’ve done the research so you don’t have to! 🕵️‍♀️</p>
+  <p>Discover top-rated products across fashion, gadgets, home essentials, and more — all handpicked for quality and value! 💡</p>
+
+  <!-- Insert your dynamic message below -->
+  <div style="background-color: #e6f0ff; border-left: 4px solid #083f90; padding: 15px; margin: 20px 0; border-radius: 5px;">
+    <p style="margin: 0; font-weight: bold;">✨ Special Message Just for You:</p>
+    <p style="margin-top: 8px;">{${message}}</p>
+  </div>
+
+  <a href="https://qualitypicks.vercel.app/products/all" style="display: inline-block; background-color: #083f90; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-top: 10px;">
+    🔍 Browse Picks Now
+  </a>
+
+  <p style="margin-top: 20px;">Got something in mind? <a href="https://qualitypicks.vercel.app/request-product" style="color: #083f90;">Request a product</a> and we’ll find it for you! 😍</p>
+
+  <p style="margin-top: 30px; font-size: 0.9em;">With ❤️ from <strong>Sri</strong> at <strong>QualityPicks</strong></p>
+</div>
+
   `;
 }
 //sendBulkEmail
@@ -146,5 +154,5 @@ module.exports = {
   getUser,
   getAllUsers,
   sendBulkEmail,
-  deleteUser
+  deleteUser,
 };
