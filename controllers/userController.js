@@ -128,10 +128,23 @@ const loginUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    await User.findByIdAndDelete(userId);
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to delete user", error: err.message });
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getUser,
   getAllUsers,
   sendBulkEmail,
+  deleteUser
 };
