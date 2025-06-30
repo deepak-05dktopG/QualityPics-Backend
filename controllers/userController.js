@@ -81,7 +81,7 @@ const registerUser = async (req, res) => {
     const user = new User({ name, email, verificationToken: token });
     await user.save();
 
-    const verificationLink = `https://qualitypicks.vercel.app/verify-email?token=${token}`;
+    const verificationLink = `https://quality-product-backend.onrender.com/verify-email?token=${token}`;
     await sendEmail(
       email,
       "Verify your email 📧",
@@ -95,12 +95,11 @@ const registerUser = async (req, res) => {
     );
 
     res.status(201).json({ message: "Verification email sent!" });
-
-    //     const newUser = await User.create({ name, email });
-    //     await sendEmail(
-    //       email,
-    //       "🎉 Welcome to QualityPicks – Your Shortcut to Smart Shopping!",
-    //       `
+    // const newUser = await User.create({ name, email });
+    // await sendEmail(
+    //   email,
+    //   "🎉 Welcome to QualityPicks – Your Shortcut to Smart Shopping!",
+    //   `
     // <div style="font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; max-width:600px; margin:auto; padding:24px; background:#fff; border-radius:12px; border:1px solid #e0e0e0; box-shadow:0 2px 8px rgba(44,123,229,0.07);">
     //   <div style="text-align:center; margin-bottom:20px;">
     //     <h2 style="color:#2C7BE5; font-size:20px; margin:0 0 8px 0;">👋 Hi ${name}, welcome to <span style="color:#1A73E8;">QualityPicks</span>!</h2>
@@ -113,6 +112,9 @@ const registerUser = async (req, res) => {
     //       🔍 Why waste hours comparing products? At QualityPicks, we’ve already done the deep research for you.
     //     </p>
     //   </div>
+    //           <a href="${verificationLink}" style="padding: 10px 20px; background: #083f90; color: #fff; border-radius: 5px; text-decoration: none;">
+    //       ✅ Verify Email
+    //     </a>
     //   <p style="font-size:15px; color:#555; margin-bottom:12px; text-align:center;">
     //     From electronics to everyday essentials, each product you see on our platform is carefully selected based on performance, reviews, and value for money.
     //   </p>
@@ -135,8 +137,8 @@ const registerUser = async (req, res) => {
     // </div>
 
     //   `
-    //     );
-    // res.status(201).json(newUser);
+    // );
+    // res.status(201).json(user);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
