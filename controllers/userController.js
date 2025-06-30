@@ -82,7 +82,7 @@ const registerUser = async (req, res) => {
     await user.save();
 
     const verificationLink = `https://qualitypicks.vercel.app/verify-email?token=${token}`;
-    await sendMail({
+    await sendEmail({
       from: "QualityPicks <forwebdeepak@gmail.com>",
       to: email,
       subject: "Verify your email 📧",
