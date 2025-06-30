@@ -6,7 +6,8 @@ const {
   getUser,
   getAllUsers,
   sendBulkEmail,
-  deleteUser
+  deleteUser,
+  verifyUserEmail
 } = require("../controllers/userController");
 const { adminLogin } = require("../controllers/adminController");
 
@@ -17,5 +18,7 @@ router.get("/get/:id", getUser);
 router.get("/getAll", getAllUsers);
 router.post("/send-bulk-email", sendBulkEmail);
 router.delete("/delete/:id", deleteUser);
+router.get("/verify-email", verifyUserEmail);
+
 
 module.exports = router;

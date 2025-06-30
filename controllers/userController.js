@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 const { sendEmail } = require("../utils/emailSender");
 
 //getAlluser
@@ -73,51 +74,92 @@ const registerUser = async (req, res) => {
       return res
         .status(400)
         .json({ message: "User already exists (Already Registered)" });
-    const newUser = await User.create({ name, email });
 
-    await sendEmail(
-      email,
-      "🎉 Welcome to QualityPicks – Your Shortcut to Smart Shopping!",
-      `
-<div style="font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; max-width:600px; margin:auto; padding:24px; background:#fff; border-radius:12px; border:1px solid #e0e0e0; box-shadow:0 2px 8px rgba(44,123,229,0.07);">
-  <div style="text-align:center; margin-bottom:20px;">
-    <h2 style="color:#2C7BE5; font-size:20px; margin:0 0 8px 0;">👋 Hi ${name}, welcome to <span style="color:#1A73E8;">QualityPicks</span>!</h2>
-  </div>
-  <p style="font-size:16px; color:#333; margin-bottom:16px; text-align:center;">
-    Thank you for signing up with <strong>QualityPicks</strong> — the platform built to help you <strong>discover the best, research-backed products</strong> without the overwhelming search.
-  </p>
-  <div style="background:#E8F0FE; padding:16px; border-radius:8px; margin:24px 0 18px 0; border-left:4px solid #2C7BE5;">
-    <p style="margin:0; font-size:15px; color:#1A73E8; text-align:justify;">
-      🔍 Why waste hours comparing products? At QualityPicks, we’ve already done the deep research for you.
-    </p>
-  </div>
-  <p style="font-size:15px; color:#555; margin-bottom:12px; text-align:center;">
-    From electronics to everyday essentials, each product you see on our platform is carefully selected based on performance, reviews, and value for money.
-  </p>
-  <p style="font-size:15px; color:#555; margin-bottom:18px; text-align:center;">
-    Start exploring now and make confident purchase decisions with ease.
-  </p>
-  <div style="text-align:center; margin-top:28px;">
-    <a href="https://qualitypicks.vercel.app/" style="background:#2C7BE5; color:#fff; padding:12px 28px; text-decoration:none; border-radius:7px; font-size:16px; font-weight:600; box-shadow:0 2px 6px rgba(44,123,229,0.12); display:inline-block;">
-      🔗 Visit QualityPicks
-    </a>
-  </div>
-  <p style="font-size:15px; color:#555; margin-top:36px; margin-bottom:6px;">
-    We're excited to help you shop smarter,
-  </p>
-  <p style="font-weight:bold; color:#2C7BE5; margin:0;">– Team QualityPicks</p>
-  <hr style="margin:32px 0 18px 0; border:none; border-top:1px solid #eee;" />
-  <div style="font-size:12px; color:#999; text-align:center;">
-    You're receiving this email because you registered at QualityPicks.<br/>
-  </div>
-</div>
+    const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    const user = new User({ name, email, verificationToken: token });
+    await user.save();
 
-  `
-    );
+    const verificationLink = `https://qualitypicks.vercel.app/verify-email?token=${token}`;
+    await sendMail({
+      from: "QualityPicks <forwebdeepak@gmail.com>",
+      to: email,
+      subject: "Verify your email 📧",
+      html: `
+        <h3>Welcome to QualityPicks 🛍️</h3>
+        <p>Click the button below to verify your email:</p>
+        <a href="${verificationLink}" style="padding: 10px 20px; background: #083f90; color: #fff; border-radius: 5px; text-decoration: none;">
+          ✅ Verify Email
+        </a>
+        <p>This link will expire in 24 hours.</p>
+      `,
+    });
 
-    res.status(201).json(newUser);
+    res.status(201).json({ message: "Verification email sent!" });
+
+    //     const newUser = await User.create({ name, email });
+    //     await sendEmail(
+    //       email,
+    //       "🎉 Welcome to QualityPicks – Your Shortcut to Smart Shopping!",
+    //       `
+    // <div style="font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; max-width:600px; margin:auto; padding:24px; background:#fff; border-radius:12px; border:1px solid #e0e0e0; box-shadow:0 2px 8px rgba(44,123,229,0.07);">
+    //   <div style="text-align:center; margin-bottom:20px;">
+    //     <h2 style="color:#2C7BE5; font-size:20px; margin:0 0 8px 0;">👋 Hi ${name}, welcome to <span style="color:#1A73E8;">QualityPicks</span>!</h2>
+    //   </div>
+    //   <p style="font-size:16px; color:#333; margin-bottom:16px; text-align:center;">
+    //     Thank you for signing up with <strong>QualityPicks</strong> — the platform built to help you <strong>discover the best, research-backed products</strong> without the overwhelming search.
+    //   </p>
+    //   <div style="background:#E8F0FE; padding:16px; border-radius:8px; margin:24px 0 18px 0; border-left:4px solid #2C7BE5;">
+    //     <p style="margin:0; font-size:15px; color:#1A73E8; text-align:justify;">
+    //       🔍 Why waste hours comparing products? At QualityPicks, we’ve already done the deep research for you.
+    //     </p>
+    //   </div>
+    //   <p style="font-size:15px; color:#555; margin-bottom:12px; text-align:center;">
+    //     From electronics to everyday essentials, each product you see on our platform is carefully selected based on performance, reviews, and value for money.
+    //   </p>
+    //   <p style="font-size:15px; color:#555; margin-bottom:18px; text-align:center;">
+    //     Start exploring now and make confident purchase decisions with ease.
+    //   </p>
+    //   <div style="text-align:center; margin-top:28px;">
+    //     <a href="https://qualitypicks.vercel.app/" style="background:#2C7BE5; color:#fff; padding:12px 28px; text-decoration:none; border-radius:7px; font-size:16px; font-weight:600; box-shadow:0 2px 6px rgba(44,123,229,0.12); display:inline-block;">
+    //       🔗 Visit QualityPicks
+    //     </a>
+    //   </div>
+    //   <p style="font-size:15px; color:#555; margin-top:36px; margin-bottom:6px;">
+    //     We're excited to help you shop smarter,
+    //   </p>
+    //   <p style="font-weight:bold; color:#2C7BE5; margin:0;">– Team QualityPicks</p>
+    //   <hr style="margin:32px 0 18px 0; border:none; border-top:1px solid #eee;" />
+    //   <div style="font-size:12px; color:#999; text-align:center;">
+    //     You're receiving this email because you registered at QualityPicks.<br/>
+    //   </div>
+    // </div>
+
+    //   `
+    //     );
+    // res.status(201).json(newUser);
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+//Verify user email
+const verifyUserEmail = async (req, res) => {
+  const { token } = req.query;
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ email: decoded.email });
+
+    if (!user) return res.status(404).send("User not found.");
+    if (user.isVerified) return res.send("Email already verified.");
+
+    user.isVerified = true;
+    user.verificationToken = null;
+    await user.save();
+
+    res.send("🎉 Email verified successfully! You can now log in.");
+  } catch (err) {
+    res.status(400).send("❌ Invalid or expired token.");
   }
 };
 
@@ -130,6 +172,9 @@ const loginUser = async (req, res) => {
       return res
         .status(404)
         .json({ message: "❌ User not found ❌(Need to Register)" });
+    if (!user.isVerified)
+      return res.status(403).send("Please verify your email first!");
+    
     res.status(200).json({ _id: user._id, name: user.name, email: user.email });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -155,4 +200,5 @@ module.exports = {
   getAllUsers,
   sendBulkEmail,
   deleteUser,
+  verifyUserEmail,
 };
