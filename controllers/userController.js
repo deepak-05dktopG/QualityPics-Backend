@@ -82,19 +82,17 @@ const registerUser = async (req, res) => {
     await user.save();
 
     const verificationLink = `https://qualitypicks.vercel.app/verify-email?token=${token}`;
-    await sendEmail({
-      from: "QualityPicks <forwebdeepak@gmail.com>",
-      to: email,
-      subject: "Verify your email 📧",
-      html: `
-        <h3>Welcome to QualityPicks 🛍️</h3>
+    await sendEmail(
+      email,
+      "Verify your email 📧",
+      ` <h3>Welcome to QualityPicks 🛍️</h3>
         <p>Click the button below to verify your email:</p>
         <a href="${verificationLink}" style="padding: 10px 20px; background: #083f90; color: #fff; border-radius: 5px; text-decoration: none;">
           ✅ Verify Email
         </a>
         <p>This link will expire in 24 hours.</p>
-      `,
-    });
+      `
+    );
 
     res.status(201).json({ message: "Verification email sent!" });
 
@@ -174,7 +172,7 @@ const loginUser = async (req, res) => {
         .json({ message: "❌ User not found ❌(Need to Register)" });
     if (!user.isVerified)
       return res.status(403).send("Please verify your email first!");
-    
+
     res.status(200).json({ _id: user._id, name: user.name, email: user.email });
   } catch (err) {
     res.status(500).json({ message: err.message });
