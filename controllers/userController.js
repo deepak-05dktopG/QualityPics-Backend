@@ -26,7 +26,7 @@ function generateEmailHTML(message) {
   <!-- Insert your dynamic message below -->
   <div style="background-color: #e6f0ff; border-left: 4px solid #083f90; padding: 15px; margin: 20px 0; border-radius: 5px;">
     <p style="margin: 0; font-weight: bold;">✨ Special Message Just for You:</p>
-    <p style="margin-top: 8px;">{${message}}</p>
+    <p style="margin-top: 8px;">${message}</p>
   </div>
 
   <a href="https://qualitypicks.vercel.app/products/all" style="display: inline-block; background-color: #083f90; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-top: 10px;">
@@ -35,7 +35,7 @@ function generateEmailHTML(message) {
 
   <p style="margin-top: 20px;">Got something in mind? <a href="https://qualitypicks.vercel.app/request-product" style="color: #083f90;">Request a product</a> and we’ll find it for you! 😍</p>
 
-  <p style="margin-top: 30px; font-size: 0.9em;">With ❤️ from <strong>Sri</strong> at <strong>QualityPicks</strong></p>
+  <p style="margin-top: 30px; font-size: 0.9em;">With ❤️ from <strong>QualityPicks Team</strong> at <strong>QualityPicks</strong></p>
 </div>
 
   `;
