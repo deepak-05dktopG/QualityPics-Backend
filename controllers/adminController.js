@@ -21,11 +21,11 @@ const adminLogin = async (req, res) => {
   }
 };
 
-// const newAdmin = new Admin({
-//   email: 'kumardeepak59422@gmail.com',
-//   password: 'deepakkumar@FF009' // this will be hashed before save
-// });
+const newAdmin = new Admin({
+  email: 'srinnethi.rd@gmail.com',
+  password: 'Srinnethi' // this will be hashed before save
+});
 
-// newAdmin.save(); // Password gets hashed here
+newAdmin.save(); // Password gets hashed here
 
 module.exports = { adminLogin };
