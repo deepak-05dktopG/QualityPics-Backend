@@ -67,9 +67,19 @@ const getUser = async (req, res) => {
 
 // Register user
 const registerUser = async (req, res) => {
-  const name = req.body?.name || req.query?.name;
+  const name = req.body?.name || req.query?.name || 'Anonymous User';
   const email = req.body?.email || req.query?.email;
+
+  // ✅ CRITICAL VALIDATION
+  if (!name || !email || !email.includes('@')) {
+    return res.status(400).json({ 
+      message: "Valid name and email required" 
+    });
+  }
+
   try {
+        console.log('Creating user:', { name, email }); // Debug
+
     const existing = await User.findOne({ email });
     if (existing)
       return res
@@ -77,7 +87,14 @@ const registerUser = async (req, res) => {
         .json({ message: "User alread y exists  (Already Registered)" });
 
 
-    const newUser = await User.create({ name, email });
+const newUser = await User.create({ 
+      name: name.trim(), 
+      email: email.trim().toLowerCase() 
+    });
+    await sendEmail(email, "Welcome to QualityPicks!", `...`);
+    
+
+
     await sendEmail(
       email,
       "🎉 Welcome to QualityPicks – Your Shortcut to Smart Shopping!",
@@ -118,8 +135,12 @@ const registerUser = async (req, res) => {
 
       `
     );
-    res.status(201).json(newUser);
-  } catch (err) {
+    res.status(201).json({ 
+      success: true, 
+      message: "User registered successfully!",
+      user: newUser 
+    });
+    } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
