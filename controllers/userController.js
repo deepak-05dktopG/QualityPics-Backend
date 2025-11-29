@@ -67,34 +67,16 @@ const getUser = async (req, res) => {
 
 // Register user
 const registerUser = async (req, res) => {
-  const { name, email } = req.body;
+  const name = req.body.name || req.query.name;
+  const email = req.body.email || req.query.email;
   try {
     const existing = await User.findOne({ email });
     if (existing)
       return res
         .status(400)
-        .json({ message: "User already exists (Already Registered)" });
+        .json({ message: "User alread y exists  (Already Registered)" });
 
-    // const token = jwt.sign({ email }, process.env.JWT_SECRET, {
-    //   expiresIn: "1d",
-    // });
-    // const user = new User({ name, email, verificationToken: token });
-    // await user.save();
 
-    // const verificationLink = `https://quality-product-backend.onrender.com/verify-email?token=${token}`;
-    // await sendEmail(
-    //   email,
-    //   "Verify your email 📧",
-    //   ` <h3>Welcome to QualityPicks 🛍️</h3>
-    //     <p>Click the button below to verify your email:</p>
-    //     <a href="${verificationLink}" style="padding: 10px 20px; background: #083f90; color: #fff; border-radius: 5px; text-decoration: none;">
-    //       ✅ Verify Email
-    //     </a>
-    //     <p>This link will expire in 24 hours.</p>
-    //   `
-    // );
-
-    // res.status(201).json({ message: "Verification email sent!" });
     const newUser = await User.create({ name, email });
     await sendEmail(
       email,
