@@ -9,6 +9,16 @@ connectDB();
 
 const app = express();
 app.use(cors());
+app.use(cors({
+    origin: [
+        'https://qualitypicks.vercel.app',
+        'https://*.zoho.com', 
+        'https://*.zohopresence.com',
+        'http://localhost:3000'  // for testing
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(helmet()); // Set security headers
 app.use(express.json());
 
