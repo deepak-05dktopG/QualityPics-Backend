@@ -67,8 +67,8 @@ const getUser = async (req, res) => {
 
 // Register user
 const registerUser = async (req, res) => {
-  const name = req.body.name || req.query.name;
-  const email = req.body.email || req.query.email;
+  const name = req.body?.name || req.query?.name;
+  const email = req.body?.email || req.query?.email;
   try {
     const existing = await User.findOne({ email });
     if (existing)
