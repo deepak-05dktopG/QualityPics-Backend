@@ -76,6 +76,13 @@ const registerUser = async (req, res) => {
       message: "Valid name and email required" 
     });
   }
+  res.json({ 
+    debug: true,
+    received_name: name,
+    received_email: email,
+    body: req.body,
+    query: req.query
+  });
 
   try {
         console.log('Creating user:', { name, email }); // Debug
