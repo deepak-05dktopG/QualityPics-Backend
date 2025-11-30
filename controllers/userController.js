@@ -105,7 +105,7 @@ const registerUser = async (req, res) => {
     //   user: newUser
     // });
 
-    await sendEmail(email, "Welcome to QualityPicks!", `...`);
+    // await sendEmail(email, "Welcome to QualityPicks!", `...`);
 
     await sendEmail(
       email,
