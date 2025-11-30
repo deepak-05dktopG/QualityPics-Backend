@@ -105,8 +105,6 @@ const registerUser = async (req, res) => {
       user: newUser
     });
 
-    await sendEmail(email, "Welcome to QualityPicks!", `...`);
-
     await sendEmail(
       email,
       "🎉 Welcome to QualityPicks – Your Shortcut to Smart Shopping!",
@@ -150,7 +148,7 @@ const registerUser = async (req, res) => {
     res.status(200).json({
       success: true,
       message:
-        "Registration successful! Your QualityPicks account is now active.",
+        "Once again welcome to the qualitypicks",
       user: newUser,
     });
   } catch (err) {
