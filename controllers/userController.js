@@ -73,12 +73,9 @@ const registerUser = async (req, res) => {
   // ✅ CRITICAL VALIDATION
   if (!name || !email) {
     return res.status(400).json({ 
-      message: `Valid name and email required ${name} - ${email}`; 
+      message: `Valid name and email required ${name} - ${email}`
     });
   }
-
-
-  
   res.json({ 
     debug: true,
     received_name: name,
