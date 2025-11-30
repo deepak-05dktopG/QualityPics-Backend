@@ -92,7 +92,7 @@ const registerUser = async (req, res) => {
     if (existing)
       return res
         .status(400)
-        .json({ message: "User alread y exists  (Already Registered)" });
+        .json({ message: "This email is already registered with QualityPicks." });
 
 
 const newUser = await User.create({ 
@@ -145,7 +145,7 @@ const newUser = await User.create({
     );
     res.status(201).json({ 
       success: true, 
-      message: "User registered successfully!",
+      message: "Registration successful! Your QualityPicks account is now active.",
       user: newUser 
     });
     } catch (err) {
