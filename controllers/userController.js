@@ -94,18 +94,19 @@ const registerUser = async (req, res) => {
         .status(400)
         .json({ message: "This email is already registered with QualityPicks." });
 
-
-    const newUser = await User.create({ 
-      name: name.trim(), 
-      email: email.trim().toLowerCase() 
-    });
-    await sendEmail(email, "Welcome to QualityPicks!", `...`);
-    
     res.status(201).json({ 
       success: true, 
       message: "Registration successful! Your QualityPicks account is now active.",
       user: newUser 
     });
+    const newUser = await User.create({ 
+      name: name.trim(), 
+      email: email.trim().toLowerCase() 
+    });
+   
+    await sendEmail(email, "Welcome to QualityPicks!", `...`);
+    
+
 
 
     await sendEmail(
