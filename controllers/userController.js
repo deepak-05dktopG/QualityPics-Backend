@@ -67,17 +67,16 @@ const getUser = async (req, res) => {
 
 // Register user
 const registerUser = async (req, res) => {
-   // Read from query string (Zoho) OR JSON body (Postman)
-  const name  = req.query.name  || req.body?.name;
+  const name = req.query.name || req.body?.name;
   const email = req.query.email || req.body?.email;
 
   // ✅ CRITICAL VALIDATION
   if (!name || !email) {
-    return res.status(400).json({ 
-      message: `Valid name and email required ${name} - ${email}`
+    return res.status(400).json({
+      message: `Valid name and email required ${name} - ${email}`,
     });
   }
-  // res.json({ 
+  // res.json({
   //   debug: true,
   //   received_name: name,
   //   received_email: email,
@@ -86,26 +85,25 @@ const registerUser = async (req, res) => {
   // });
 
   try {
-        console.log('Creating user:', { name, email }); // Debug
+    console.log("Creating user:", { name, email }); // Debug
 
     const existing = await User.findOne({ email });
     if (existing)
       return res
         .status(400)
-        .json({ message: "This email is already registered with QualityPicks." });
+        .json({
+          message: "This email is already registered with QualityPicks.",
+        });
 
-
-const newUser = await User.create({ 
-      name: name.trim(), 
-      email: email.trim().toLowerCase() 
+    const newUser = await User.create({
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
     });
-     res.status(201).json({ 
-      success: true, 
-      message: "Registration successful! Your QualityPicks account is now active.",
-      user: newUser 
-    });
-
-
+    //  res.status(201).json({
+    //   success: true,
+    //   message: "Registration successful! Your QualityPicks account is now active.",
+    //   user: newUser
+    // });
 
     await sendEmail(email, "Welcome to QualityPicks!", `...`);
 
@@ -149,11 +147,17 @@ const newUser = await User.create({
 
       `
     );
-   
-    } catch (err) {
+    res.status(201).json({
+      success: true,
+      message:
+        "Registration successful! Your QualityPicks account is now active.",
+      user: newUser,
+    });
+  } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
 //Verify user email
 const verifyUserEmail = async (req, res) => {
   const { token } = req.query;
