@@ -67,8 +67,9 @@ const getUser = async (req, res) => {
 
 // Register user
 const registerUser = async (req, res) => {
-  const name = req.body?.name || req.query?.name || 'Anonymous User';
-  const email = req.body?.email || req.query?.email;
+   // Read from query string (Zoho) OR JSON body (Postman)
+  const name  = req.query.name  || req.body?.name;
+  const email = req.query.email || req.body?.email;
 
   // ✅ CRITICAL VALIDATION
   if (!name || !email) {
