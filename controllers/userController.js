@@ -71,11 +71,14 @@ const registerUser = async (req, res) => {
   const email = req.body?.email || req.query?.email;
 
   // ✅ CRITICAL VALIDATION
-  if (!name || !email || !email.includes('@')) {
+  if (!name || !email) {
     return res.status(400).json({ 
-      message: "Valid name and email required" 
+      message: `Valid name and email required ${name} - ${email}`; 
     });
   }
+
+
+  
   res.json({ 
     debug: true,
     received_name: name,
